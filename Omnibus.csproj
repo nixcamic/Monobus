@@ -13,10 +13,11 @@
     <Content Include="omnibus-icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.23" />
-    <PackageReference Include="IKVM" Version="8.1.5717.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="IKVM" Version="8.4.5" />
     <PackageReference Include="MediaFireSDK" Version="1.0.0.2" />
-    <PackageReference Include="MegaApiClient" Version="1.8.0" />
+    <PackageReference Include="MegaApiClient" Version="1.10.3" />
+    <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.410601">

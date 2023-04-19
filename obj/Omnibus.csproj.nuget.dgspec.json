@@ -49,11 +49,11 @@
           "dependencies": {
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.11.23, )"
+              "version": "[1.11.46, )"
             },
             "IKVM": {
               "target": "Package",
-              "version": "[8.1.5717, )"
+              "version": "[8.4.5, )"
             },
             "MediaFireSDK": {
               "target": "Package",
@@ -61,11 +61,11 @@
             },
             "MegaApiClient": {
               "target": "Package",
-              "version": "[1.8.0, )"
+              "version": "[1.10.3, )"
             },
-            "Microsoft.Bcl": {
+            "Microsoft.Bcl.Build": {
               "target": "Package",
-              "version": "[1.1.9, )"
+              "version": "[1.0.21, )"
             },
             "Microsoft.CSharp": {
               "target": "Package",
@@ -76,13 +76,13 @@
               "target": "Package",
               "version": "[0.4.410601, )"
             },
+            "Microsoft.Windows.Compatibility": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
             "System.Data.DataSetExtensions": {
               "target": "Package",
               "version": "[4.5.0, )"
-            },
-            "System.Net.Http": {
-              "target": "Package",
-              "version": "[4.3.4, )"
             }
           },
           "imports": [
@@ -97,6 +97,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             },
