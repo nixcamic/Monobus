@@ -86,7 +86,7 @@ namespace Omnibus
             }
 
             //Set all Security Protocols available to test SSL certs
-            ServicePointManager.SecurityProtocol =  SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             //Warn user to get UserAgent string and cookies on first run
             //if (Properties.Settings.Default.UserAgent == "")
