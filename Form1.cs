@@ -1001,11 +1001,17 @@ namespace Omnibus
                 response.Close();
                 reader.Close();
             }
+
             catch (WebException ex)
             {
-                using (var sr = new StreamReader(ex.Response.GetResponseStream()))
-                    html = sr.ReadToEnd();
+                MessageBox.Show(ex.Message, "Error Connecting to Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            //catch (WebException ex)
+            //{
+            //    using (var sr = new StreamReader(ex.Response.GetResponseStream()))
+            //        html = sr.ReadToEnd();
+            //}
 
             //tbhtml.Text = html;
             
