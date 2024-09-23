@@ -23,7 +23,7 @@ namespace Omnibus
     {
 
         private String version = "1.5.4";
-        private String url = "https://getcomics.info/?s=";
+        private String url = "https://getcomics.org/?s=";
         private int cancelled = 0;
         private bool isDownloading = false;
         private int complete;
@@ -138,7 +138,7 @@ namespace Omnibus
 
                 try
                 {
-                    //Open the link on getcomics.info in your default browser
+                    //Open the link on getcomics.org in your default browser
                     System.Diagnostics.Process.Start(a[1]);
                 }
                 catch (Win32Exception)
@@ -471,7 +471,7 @@ namespace Omnibus
                     CancelDownload(downloadPath);
                     LogWriter(aex.ToString());
 
-                    MessageBox.Show("There was a problem downloading the comic. Try again later or download manually by clicking the Open Link button.\n\nIf this continues to happen try the following:\n1: Close Omnibus\n2: Go to https://getcomics.info in your browser\n3: Search for any comic and click the Mega button\n4: Open Omnibus and attempt the download again.");
+                    MessageBox.Show("There was a problem downloading the comic. Try again later or download manually by clicking the Open Link button.\n\nIf this continues to happen try the following:\n1: Close Omnibus\n2: Go to https://getcomics.org in your browser\n3: Search for any comic and click the Mega button\n4: Open Omnibus and attempt the download again.");
                 }
                 catch (WebException wex)
                 {
@@ -973,15 +973,15 @@ namespace Omnibus
             lbComics.Items.Clear();
             pbCover.Image = Properties.Resources.omnibus_preview_image;
 
-            string searchURL = "https://getcomics.info/page/" + page + "/?s=" + search;
+            string searchURL = "https://getcomics.org/page/" + page + "/?s=" + search;
 
             CookieContainer reqCookies = new CookieContainer();
 
-            Cookie cookieCfduid = new Cookie("__cfduid", Properties.Settings.Default.cfduid, "/", ".getcomics.info");
+            Cookie cookieCfduid = new Cookie("__cfduid", Properties.Settings.Default.cfduid, "/", ".getcomics.org");
 
             reqCookies.Add(cookieCfduid);
 
-            Cookie cookieCfClearance = new Cookie("cf_clearance", Properties.Settings.Default.cf_clearance, "/", ".getcomics.info");
+            Cookie cookieCfClearance = new Cookie("cf_clearance", Properties.Settings.Default.cf_clearance, "/", ".getcomics.org");
 
             reqCookies.Add(cookieCfClearance);
 
