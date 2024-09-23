@@ -1,4 +1,4 @@
-﻿using CG.Web.MegaApiClient;
+﻿
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace Omnibus
     public partial class Form1 : Form
     {
 
-        private String version = "1.5";
+        private String version = "1.5.4";
         private String url = "https://getcomics.info/?s=";
         private int cancelled = 0;
         private bool isDownloading = false;
@@ -33,13 +33,13 @@ namespace Omnibus
         public int LVCount = 0;
         private int page = 1;
 
+        string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0";
+
         private object comicIndex;
 
         private IEnumerable<HtmlNode> nodes, descNodes, ulNodes, newpageNodes, oldpageNodes;
 
         private System.Net.WebClient client = new System.Net.WebClient();
-
-        private MegaApiClient mClient = new MegaApiClient();
 
         private List<String> downloadList = new List<String>();
         private List<String> titleList = new List<String>();
@@ -88,15 +88,6 @@ namespace Omnibus
             //Set all Security Protocols available to test SSL certs
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-            //Warn user to get UserAgent string and cookies on first run
-            //if (Properties.Settings.Default.UserAgent == "")
-            //{
-            //    MessageBox.Show("Thank you for using Omnibus! Before you can get started, you are going to have to gather a few things. " +
-            //        "Read the Setup information on github (https://github.com/fireshaper/Omnibus) for more information.");
-            //}
-
-            //Log in to the MEGA client Anonymously
-            //mClient.LoginAnonymous();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -187,16 +178,7 @@ namespace Omnibus
                     string node = n.InnerHtml;
                     string[] a = node.Split('"');
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(a[1]);
-                    request.UserAgent = Properties.Settings.Default.UserAgent;
-                    request.Headers.Add(HttpRequestHeader.Cookie,
-                                        "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
-                                        "cf_clearance=" + Properties.Settings.Default.cf_clearance
-                                        );
-
-                    //request.Headers.Add(HttpRequestHeader.Cookie,
-                    //                    "__cfduid=" + Properties.Settings.Default.cfduid
-                    //                    );
+                    HttpWebRequest request = getRequest(a[1]);
 
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -224,83 +206,31 @@ namespace Omnibus
                         HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                         doc.LoadHtml(data);
 
-                        //// ------- FOR MEGA ------- ////
-                        //var htmlNodes = doc.DocumentNode.SelectSingleNode("//a[@title='Mega Link']");
-
-                        //if (htmlNodes == null) //Check to see if they just renamed the Node
-                        //{
-                        //    htmlNodes = doc.DocumentNode.SelectSingleNode("//a[@title='MEGA']");
-                        //}
-
-                        //if (htmlNodes == null)
-                        //{
-                        //    foreach(HtmlNode node1 in doc.DocumentNode.SelectNodes("//a"))
-                        //    {
-                        //        if (node1.SelectNodes(".//span") != null)
-                        //        {
-                        //            foreach (HtmlNode node2 in node1.SelectNodes(".//span"))
-                        //            {
-                        //                string value = node2.InnerText;
-                        //                if (value == "Mega")
-                        //                {
-                        //                    comicDLLink = node1.Attributes["href"].Value;
-                        //                }
-
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    comicDLLink = htmlNodes.Attributes["href"].Value;
-                        //}    
-
-
-                        //// ------- FOR MEDIAFIRE ------- ////
-                        //var htmlNodes = doc.DocumentNode.SelectSingleNode("//a[@title='Mediafire Link']");
-
-                        //if (htmlNodes == null)
-                        //{
-                        //    //check for old node
-                        //    htmlNodes = doc.DocumentNode.SelectSingleNode("//a[@title='MEDIAFIRE']");
-
-                        //    if (htmlNodes == null)
-                        //    {
-                        //        MessageBox.Show("No MediaFire button");
-                        //    }
-                        //    else
-                        //    {
-                        //        comicDLLink = htmlNodes.Attributes["href"].Value;
-                        //    }
-
-                        //}
-                        //else
-                        //{
-                        //    comicDLLink = htmlNodes.Attributes["href"].Value;
-                        //}
-
 
                         //// ------- FOR DOWNLOAD NOW BUTTON ------- ////
                         var htmlNodes = doc.DocumentNode.SelectSingleNode("//a[@title='Download Now']");
+                        var htmlNodesUpper = doc.DocumentNode.SelectSingleNode("//a[@title='DOWNLOAD NOW']");
 
-                        if (htmlNodes == null)
+                        if (htmlNodes != null)
                         {
-                            MessageBox.Show("No Download Now button");
+                            comicDLLink = htmlNodes.Attributes["href"].Value;
+                        }
+                        else if (htmlNodesUpper != null)
+                        {
+                            comicDLLink = htmlNodesUpper.Attributes["href"].Value;
                         }
                         else
                         {
-                            comicDLLink = htmlNodes.Attributes["href"].Value;
+                            MessageBox.Show("No Download Now button");
                         }
 
 
                         if (comicDLLink != "")
                         {
-                            //string lastEV = "";
                             string lastURL = "";
                             List<string> EVs = new List<string>();
 
-                            
-                            HttpWebRequest requestMF = (HttpWebRequest)WebRequest.Create(comicDLLink);
+                            HttpWebRequest requestMF = getRequest(comicDLLink);
 
                             try
                             {
@@ -337,6 +267,14 @@ namespace Omnibus
                         }
 
                         
+                    }
+                    else
+                    {
+
+                        var statusCode = response.StatusCode;
+                        var statusDesc = response.StatusDescription;
+
+                        MessageBox.Show("Error: " + statusCode + ": " + statusDesc);
                     }
                 }
             }
@@ -379,7 +317,6 @@ namespace Omnibus
             Uri myStringWebResource = new Uri(url);
 
 
-            //string filename = titleList[0];
             string filename = titleList[idCount];
             downloadPath = Properties.Settings.Default.DownloadLocation + "\\" + filename + ".cbr";
 
@@ -392,7 +329,7 @@ namespace Omnibus
 
             cts = new CancellationTokenSource();
 
-            WebRequest wr = WebRequest.Create(url);
+            HttpWebRequest wr = getRequest(url);
             wr.Method = "HEAD";
 
             using (WebResponse wrs = wr.GetResponse())
@@ -415,40 +352,6 @@ namespace Omnibus
                         webrequest.Method = "POST";
                         webrequest.ContentType = contenttype;
 
-                        //if (webrequest != null)
-                        //{
-                        //    WebResponse webresponse = webrequest.GetResponse();
-                        //    if (webresponse != null)
-                        //    {
-                        //        byte[] buffer;
-                        //        buffer = ASCIIEncoding.ASCII.GetBytes("File=" + filename);
-
-                        //        int bytesRead;
-
-                        //        webrequest.ContentLength = buffer.Length;
-                        //        Stream requestStream = webrequest.GetRequestStream();
-                        //        requestStream.Write(buffer, 0, buffer.Length);
-
-                        //        Stream localStream = File.Create(downloadPath);
-
-                        //        do
-                        //        {
-                        //            // Read data (up to 1k) from the stream
-                        //            bytesRead = requestStream.Read(buffer, 0, buffer.Length);
-
-                        //            // Write the data to the local file
-                        //            localStream.Write(buffer, 0, bytesRead);
-
-                        //            // Increment total bytes processed
-                        //            bytesProcessed += bytesRead;
-                        //            //Console.WriteLine("bytes processed: " + bytesProcessed + "/" + filesize);
-
-                        //            UpdateItemValue(bytesProcessed, id, filesize);
-
-                        //        } while (bytesRead > 0);
-                        //    }
-                        //}
-
                         byte[] buffer;
                         buffer = ASCIIEncoding.ASCII.GetBytes("File=" + filename);
 
@@ -465,12 +368,6 @@ namespace Omnibus
                         {
                             using (Stream responseStream = webresponse.GetResponseStream())
                             {
-                                //using (FileStream fileStream = File.Create(downloadPath))
-                                //{
-                                //    responseStream.CopyTo(fileStream);
-
-                                //}
-
                                 do
                                 { 
                                     // Read data (up to 1k) from the stream
@@ -489,14 +386,14 @@ namespace Omnibus
 
                             }
                         }
-                        
 
-
-
+                        requestStream.Close();
+                        localStream.Close();
                     }
                     else
                     {
-                        WebRequest request = WebRequest.Create(url);
+                        HttpWebRequest request = getRequest(url);
+
                         if (request != null)
                         {
                             WebResponse response = request.GetResponse();
@@ -524,7 +421,8 @@ namespace Omnibus
 
                                 } while (bytesRead > 0);
 
-
+                                remoteStream.Close();
+                                localStream.Close();
                             }
                         }
                     }
@@ -645,7 +543,6 @@ namespace Omnibus
 
             cancelled = 1;
             isDownloading = false;
-            //idCount++;
         }
 
         
@@ -744,12 +641,8 @@ namespace Omnibus
                 string node = n.InnerHtml;
                 string[] a = node.Split('"');
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(a[1]);
-                request.UserAgent = Properties.Settings.Default.UserAgent;
-                request.Headers.Add(HttpRequestHeader.Cookie,
-                                    "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
-                                    "cf_clearance=" + Properties.Settings.Default.cf_clearance
-                                    );
+
+                HttpWebRequest request = getRequest(a[1]);
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -770,6 +663,7 @@ namespace Omnibus
                     string data = readStream.ReadToEnd();
 
                     response.Close();
+                    receiveStream.Close();
                     readStream.Close();
 
                     string comicDLLink = "";
@@ -811,39 +705,20 @@ namespace Omnibus
 
                     if (comicDLLink != "")
                     {
-                        ////string lastEV = "";
-                        //string lastURL = "";
-                        //List<string> EVs = new List<string>();
-
-                        ////Get MEGA link by decrypting Base64 string in the address
-                        //string[] comicLinkArray = comicDLLink.Split('/');
-                        //if (comicLinkArray[2] != "mega.nz")
-                        //{
-                        //    string comicLinkEnc = comicLinkArray[4];
-                        //    byte[] comicLinkConverted = System.Convert.FromBase64String(comicLinkEnc);
-                        //    megaURL = System.Text.ASCIIEncoding.ASCII.GetString(comicLinkConverted);
-                        //    didDecrypt = 1;
-                        //}
-                        //else
-                        //{
-                        //    megaURL = comicDLLink;
-                        //}
-
-                        //if (didDecrypt == 1)
-                        //{
-                        //    MessageBox.Show("DECRYPTED MEGA URL: " + megaURL);
-                        //}
-                        //else
-                        //{
-                        //    MessageBox.Show("MEGA URL: " + megaURL);
-                        //}
 
                         MessageBox.Show("MEGA URLs are not being used at this time");
-
 
                     }
                     else
                         MessageBox.Show("No download link available. Go to comic's page and download manually.");
+                }
+                else
+                {
+
+                    var statusCode = response.StatusCode;
+                    var statusDesc = response.StatusDescription;
+
+                    MessageBox.Show("Error: " + statusCode + ": " + statusDesc);
                 }
             }
             if (e.ClickedItem.Name == "validateMF")
@@ -852,12 +727,8 @@ namespace Omnibus
                 string node = n.InnerHtml;
                 string[] a = node.Split('"');
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(a[1]);
-                request.UserAgent = Properties.Settings.Default.UserAgent;
-                request.Headers.Add(HttpRequestHeader.Cookie,
-                                    "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
-                                    "cf_clearance=" + Properties.Settings.Default.cf_clearance
-                                    );
+
+                HttpWebRequest request = getRequest(a[1]);
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -878,6 +749,7 @@ namespace Omnibus
                     string data = readStream.ReadToEnd();
 
                     response.Close();
+                    receiveStream.Close();
                     readStream.Close();
 
                     string comicDLLink = "";
@@ -914,7 +786,9 @@ namespace Omnibus
 
                     if (comicDLLink != "")
                     {
-                        HttpWebRequest requestMF = (HttpWebRequest)WebRequest.Create(comicDLLink);
+
+                        HttpWebRequest requestMF = getRequest(comicDLLink);
+
                         HttpWebResponse responseMF = (HttpWebResponse)requestMF.GetResponse();
 
                         if (responseMF.StatusCode == HttpStatusCode.OK)
@@ -934,6 +808,7 @@ namespace Omnibus
                             string dataMF = readStreamMF.ReadToEnd();
 
                             responseMF.Close();
+                            receiveStream.Close();
                             readStreamMF.Close();
 
                             string comicDLLinkMF = "";
@@ -952,6 +827,14 @@ namespace Omnibus
                     }
                     else
                         MessageBox.Show("No download link available. Go to comic's page and download manually.");
+                }
+                else
+                {
+
+                    var statusCode = response.StatusCode;
+                    var statusDesc = response.StatusDescription;
+
+                    MessageBox.Show("Error: " + statusCode + ": " + statusDesc);
                 }
             }
         }
@@ -1005,12 +888,6 @@ namespace Omnibus
         {
             downloadList.RemoveAt(0);
             titleList.RemoveAt(0);
-            //idCount++;
-
-            //if (downloadList.Count > 0)
-            //{
-            //    DownloadComic(idCount);
-            //}
         }
 
         private void tbComicSearch_KeyDown(object sender, KeyEventArgs e)
@@ -1028,12 +905,6 @@ namespace Omnibus
             
             downloadList.RemoveAt(0);
             titleList.RemoveAt(0);
-                
-            //if (downloadList.Count > 0)
-            //{
-            //    idCount++;
-            //    DownloadComic(idCount);
-            //}
 
         }
 
@@ -1114,14 +985,8 @@ namespace Omnibus
 
             reqCookies.Add(cookieCfClearance);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(searchURL);
-            request.UserAgent = Properties.Settings.Default.UserAgent;
-            request.CookieContainer = reqCookies;
 
-            //request.Headers.Add(HttpRequestHeader.Cookie,
-            //                    "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
-            //                    "cf_clearance=" + Properties.Settings.Default.cf_clearance
-            //                    );
+            HttpWebRequest request = getRequest(searchURL);
 
             HttpWebResponse response = null;
 
@@ -1134,6 +999,7 @@ namespace Omnibus
                 var reader = new StreamReader(stream);
                 html = reader.ReadToEnd();
                 response.Close();
+                reader.Close();
             }
             catch (WebException ex)
             {
@@ -1158,20 +1024,6 @@ namespace Omnibus
                 if (Properties.Settings.Default.cfduid != "" && Properties.Settings.Default.cf_clearance != "")
                 {
                     MessageBox.Show("Comic does not exist or Cookies are not correct. Check your Cookies in Settings and try again.");
-
-                    //string missingCookie = GetCookie();
-                    //string[] aMissingCookie = missingCookie.Split(';');
-                    //string[] aMCInfo = aMissingCookie[0].Split('=');
-                    //string mcName = aMCInfo[0];
-                    //string mcValue = aMCInfo[1];
-
-                    //if (mcName == "__cfduid")
-                    //{
-                    //    Properties.Settings.Default.cfduid = mcValue;
-                    //    Properties.Settings.Default.Save();
-                    //}                    
-
-                    //MessageBox.Show("Saved new cookie: " + mcName +" = " + mcValue + "\nClick Search Button again.");
                 }
                 else
                 {
@@ -1188,69 +1040,6 @@ namespace Omnibus
             }
             else
             {
-                /*
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    Stream receiveStream = response.GetResponseStream();
-                    StreamReader readStream = null;
-
-                    if (response.CharacterSet == null)
-                    {
-                        readStream = new StreamReader(receiveStream);
-                    }
-                    else
-                    {
-                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                    }
-
-                    string data = readStream.ReadToEnd();
-
-                    response.Close();
-                    readStream.Close();
-
-                    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-                    doc.LoadHtml(data);
-
-                    var npNodes = doc.DocumentNode.Descendants(0).Where(n => n.HasClass("pagination-newer"));
-                    var opNodes = doc.DocumentNode.Descendants(0).Where(n => n.HasClass("pagination-older"));
-
-                    if (opNodes.Count() > 0)
-                    {
-                        btnNextPage.Enabled = true;
-                    }
-                    else
-                    {
-                        btnNextPage.Enabled = false;
-                    }
-
-                    if (npNodes.Count() > 0)
-                    {
-                        btnLastPage.Enabled = true;
-                    }
-                    else
-                    {
-                        btnLastPage.Enabled = false;
-                    }
-
-                    nodes = doc.DocumentNode.Descendants(0).Where(n => n.HasClass("post-header-image"));
-
-                    foreach (HtmlNode n in nodes)
-                    {
-                        string node = n.InnerHtml;
-                        string[] a = node.Split('"');
-
-                        string title = replaceASCII(a[5]);
-
-                        lbComics.Items.Add(title);
-                    }
-
-                    descNodes = doc.DocumentNode.Descendants(0).Where(n => n.HasClass("post-info"));
-                }
-                else
-                {
-                    MessageBox.Show("There was an error. Try again in a couple of minutes.");
-                }*/
-
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(html);
 
@@ -1322,5 +1111,17 @@ namespace Omnibus
             return cookie;
         }
 
+        public HttpWebRequest getRequest(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.UserAgent = userAgent;
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8";
+            request.Headers.Add(HttpRequestHeader.Cookie,
+                                "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
+                                "cf_clearance=" + Properties.Settings.Default.cf_clearance
+                                );
+
+            return request;
+        }
     }
 }
