@@ -4,7 +4,7 @@ Monobus is a fork of Omnibus, a program that lets you search for and download co
 ![Omnibus](https://i.imgur.com/UohUPuI.png)
 
 ## Installation
-Download the latest release, unzip, and run.
+Download the latest .exe and run.
 
 
 ## Usage
