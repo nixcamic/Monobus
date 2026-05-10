@@ -1,10 +1,10 @@
-# Omnibus
-Search for and download comics that are added to GetComics.info easily
+# About
+Monobus is a fork of Omnibus, a program that lets you search for and download comics that are added to GetComics.org easily. Currently Windows only but the goal is to be cross platform.
 
-![Omnibus](https://i.imgur.com/JECdY1G.png)
+![Omnibus](https://i.imgur.com/UohUPuI.png)
 
 ## Installation
-Download the latest release, unzip, and run.
+Download the latest .exe and run.
 
 
 ## Usage
