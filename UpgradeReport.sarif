@@ -564,7 +564,9 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "file:///C:/Users/nixca/source/repos/Monobus/Omnibus.csproj"
+                  "uri": "file:///C:/Users/nixca/source/repos/Monobus/
+                    
+                    bus.csproj"
                 },
                 "region": {}
               }

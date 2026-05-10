@@ -58,7 +58,7 @@ namespace Monobus
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = "Omnibus - v" + version;
+            this.Text = "Monobus - v" + version;
             
             //Create Tooltips for settings and download location button
             ToolTip toolTip1 = new ToolTip();
@@ -471,7 +471,7 @@ namespace Monobus
                     CancelDownload(downloadPath);
                     LogWriter(aex.ToString());
 
-                    MessageBox.Show("There was a problem downloading the comic. Try again later or download manually by clicking the Open Link button.\n\nIf this continues to happen try the following:\n1: Close Omnibus\n2: Go to https://getcomics.org in your browser\n3: Search for any comic and click the Mega button\n4: Open Omnibus and attempt the download again.");
+                    MessageBox.Show("There was a problem downloading the comic. Try again later or download manually by clicking the Open Link button.\n\nIf this continues to happen try the following:\n1: Close Monobus\n2: Go to https://getcomics.org in your browser\n3: Search for any comic and click the Mega button\n4: Open Monobus and attempt the download again.");
                 }
                 catch (WebException wex)
                 {
