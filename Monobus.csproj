@@ -10,10 +10,19 @@
     <ApplicationIcon>omnibus-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\downloads-32px.png" />
+    <None Remove="Resources\downloads.png" />
+    <None Remove="Resources\omnibus-icon.png" />
+    <None Remove="Resources\omnibus-preview-image.png" />
+    <None Remove="Resources\settings-32px.png" />
+    <None Remove="Resources\settings-52px.png" />
+    <None Remove="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="omnibus-icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.66" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
     <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
@@ -26,5 +35,14 @@
   </Target>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\downloads-32px.png" />
+    <EmbeddedResource Include="Resources\downloads.png" />
+    <EmbeddedResource Include="Resources\omnibus-icon.png" />
+    <EmbeddedResource Include="Resources\omnibus-preview-image.png" />
+    <EmbeddedResource Include="Resources\settings-32px.png" />
+    <EmbeddedResource Include="Resources\settings-52px.png" />
+    <EmbeddedResource Include="Resources\settings.png" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebClient = System.Net.WebClient;
 
-namespace Omnibus
+namespace Monobus
 {
     public partial class Form1 : Form
     {
@@ -109,7 +109,7 @@ namespace Omnibus
             catch (WebException we)
             {
                 LogWriter("Error loading cover image.");
-                pbCover.Image = Omnibus.Properties.Resources.omnibus_preview_image;
+                pbCover.Image = Monobus.Properties.Resources.omnibus_preview_image;
             }
             
 

@@ -1,4 +1,4 @@
-﻿namespace Omnibus
+﻿namespace Monobus
 {
     partial class Form1
     {
@@ -28,311 +28,294 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.lbComics = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbComicSearch = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnOpenLink = new System.Windows.Forms.Button();
-            this.btnDownload = new System.Windows.Forms.Button();
-            this.tbDesc = new System.Windows.Forms.RichTextBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.pbCover = new System.Windows.Forms.PictureBox();
-            this.lvDownloads = new System.Windows.Forms.ListView();
-            this.Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Progress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.clearDownloads = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLastPage = new System.Windows.Forms.Button();
-            this.btnNextPage = new System.Windows.Forms.Button();
-            this.cmsComics = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.search = new System.Windows.Forms.ToolStripMenuItem();
-            this.validate = new System.Windows.Forms.ToolStripMenuItem();
-            this.validateMF = new System.Windows.Forms.ToolStripMenuItem();
-            this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            ((System.ComponentModel.ISupportInitialize)(this.pbCover)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
-            this.cmsComics.SuspendLayout();
-            this.SuspendLayout();
+            lbComics = new System.Windows.Forms.ListBox();
+            label1 = new System.Windows.Forms.Label();
+            tbComicSearch = new System.Windows.Forms.TextBox();
+            btnSearch = new System.Windows.Forms.Button();
+            btnOpenLink = new System.Windows.Forms.Button();
+            btnDownload = new System.Windows.Forms.Button();
+            tbDesc = new System.Windows.Forms.RichTextBox();
+            btnClear = new System.Windows.Forms.Button();
+            button2 = new System.Windows.Forms.Button();
+            button1 = new System.Windows.Forms.Button();
+            pbCover = new System.Windows.Forms.PictureBox();
+            lvDownloads = new System.Windows.Forms.ListView();
+            Title = new System.Windows.Forms.ColumnHeader();
+            Status = new System.Windows.Forms.ColumnHeader();
+            Progress = new System.Windows.Forms.ColumnHeader();
+            ID = new System.Windows.Forms.ColumnHeader();
+            contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
+            Cancel = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            clearDownloads = new System.Windows.Forms.ToolStripMenuItem();
+            btnLastPage = new System.Windows.Forms.Button();
+            btnNextPage = new System.Windows.Forms.Button();
+            cmsComics = new System.Windows.Forms.ContextMenuStrip(components);
+            search = new System.Windows.Forms.ToolStripMenuItem();
+            validate = new System.Windows.Forms.ToolStripMenuItem();
+            validateMF = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)pbCover).BeginInit();
+            contextMenuStrip1.SuspendLayout();
+            cmsComics.SuspendLayout();
+            SuspendLayout();
             // 
             // lbComics
             // 
-            this.lbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbComics.FormattingEnabled = true;
-            this.lbComics.Location = new System.Drawing.Point(9, 113);
-            this.lbComics.Margin = new System.Windows.Forms.Padding(2);
-            this.lbComics.Name = "lbComics";
-            this.lbComics.Size = new System.Drawing.Size(402, 186);
-            this.lbComics.TabIndex = 2;
-            this.lbComics.SelectedIndexChanged += new System.EventHandler(this.lbComics_SelectedIndexChanged);
-            this.lbComics.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbComics_MouseDown);
+            lbComics.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbComics.FormattingEnabled = true;
+            lbComics.ItemHeight = 15;
+            lbComics.Location = new System.Drawing.Point(10, 130);
+            lbComics.Margin = new System.Windows.Forms.Padding(2);
+            lbComics.Name = "lbComics";
+            lbComics.Size = new System.Drawing.Size(468, 214);
+            lbComics.TabIndex = 2;
+            lbComics.SelectedIndexChanged += lbComics_SelectedIndexChanged;
+            lbComics.MouseDown += lbComics_MouseDown;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(251, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Search for a comic (leave blank for recently added):";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 17);
+            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(277, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Search for a comic (leave blank for recently added):";
             // 
             // tbComicSearch
             // 
-            this.tbComicSearch.Location = new System.Drawing.Point(9, 34);
-            this.tbComicSearch.Margin = new System.Windows.Forms.Padding(2);
-            this.tbComicSearch.Name = "tbComicSearch";
-            this.tbComicSearch.Size = new System.Drawing.Size(216, 20);
-            this.tbComicSearch.TabIndex = 0;
-            this.tbComicSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbComicSearch_KeyDown);
+            tbComicSearch.Location = new System.Drawing.Point(10, 39);
+            tbComicSearch.Margin = new System.Windows.Forms.Padding(2);
+            tbComicSearch.Name = "tbComicSearch";
+            tbComicSearch.Size = new System.Drawing.Size(251, 23);
+            tbComicSearch.TabIndex = 0;
+            tbComicSearch.KeyDown += tbComicSearch_KeyDown;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(228, 31);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(56, 25);
-            this.btnSearch.TabIndex = 1;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            btnSearch.Location = new System.Drawing.Point(266, 36);
+            btnSearch.Margin = new System.Windows.Forms.Padding(2);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new System.Drawing.Size(65, 29);
+            btnSearch.TabIndex = 1;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
             // btnOpenLink
             // 
-            this.btnOpenLink.Location = new System.Drawing.Point(9, 85);
-            this.btnOpenLink.Margin = new System.Windows.Forms.Padding(2);
-            this.btnOpenLink.Name = "btnOpenLink";
-            this.btnOpenLink.Size = new System.Drawing.Size(70, 23);
-            this.btnOpenLink.TabIndex = 4;
-            this.btnOpenLink.Text = "Open Link";
-            this.btnOpenLink.UseVisualStyleBackColor = true;
-            this.btnOpenLink.Click += new System.EventHandler(this.btnOpenLink_Click);
+            btnOpenLink.Location = new System.Drawing.Point(10, 98);
+            btnOpenLink.Margin = new System.Windows.Forms.Padding(2);
+            btnOpenLink.Name = "btnOpenLink";
+            btnOpenLink.Size = new System.Drawing.Size(82, 27);
+            btnOpenLink.TabIndex = 4;
+            btnOpenLink.Text = "Open Link";
+            btnOpenLink.UseVisualStyleBackColor = true;
+            btnOpenLink.Click += btnOpenLink_Click;
             // 
             // btnDownload
             // 
-            this.btnDownload.Location = new System.Drawing.Point(83, 85);
-            this.btnDownload.Margin = new System.Windows.Forms.Padding(2);
-            this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(101, 23);
-            this.btnDownload.TabIndex = 5;
-            this.btnDownload.Text = "Download Comic";
-            this.btnDownload.UseVisualStyleBackColor = true;
-            this.btnDownload.Click += new System.EventHandler(this.btnDownload_ClickAsync);
+            btnDownload.Location = new System.Drawing.Point(97, 98);
+            btnDownload.Margin = new System.Windows.Forms.Padding(2);
+            btnDownload.Name = "btnDownload";
+            btnDownload.Size = new System.Drawing.Size(118, 27);
+            btnDownload.TabIndex = 5;
+            btnDownload.Text = "Download Comic";
+            btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += btnDownload_ClickAsync;
             // 
             // tbDesc
             // 
-            this.tbDesc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDesc.Location = new System.Drawing.Point(9, 303);
-            this.tbDesc.Margin = new System.Windows.Forms.Padding(2);
-            this.tbDesc.Name = "tbDesc";
-            this.tbDesc.ReadOnly = true;
-            this.tbDesc.Size = new System.Drawing.Size(402, 103);
-            this.tbDesc.TabIndex = 6;
-            this.tbDesc.Text = "";
+            tbDesc.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            tbDesc.Location = new System.Drawing.Point(10, 350);
+            tbDesc.Margin = new System.Windows.Forms.Padding(2);
+            tbDesc.Name = "tbDesc";
+            tbDesc.ReadOnly = true;
+            tbDesc.Size = new System.Drawing.Size(468, 118);
+            tbDesc.TabIndex = 6;
+            tbDesc.Text = "";
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(289, 31);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(58, 25);
-            this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            btnClear.Location = new System.Drawing.Point(337, 36);
+            btnClear.Margin = new System.Windows.Forms.Padding(2);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new System.Drawing.Size(68, 29);
+            btnClear.TabIndex = 11;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // button2
             // 
-            this.button2.Image = global::Omnibus.Properties.Resources.downloads_32px;
-            this.button2.Location = new System.Drawing.Point(590, 10);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(39, 42);
-            this.button2.TabIndex = 13;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.Image = Monobus.Properties.Resources.downloads_32px;
+            button2.Location = new System.Drawing.Point(688, 12);
+            button2.Margin = new System.Windows.Forms.Padding(2);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(46, 48);
+            button2.TabIndex = 13;
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
-            this.button1.Image = global::Omnibus.Properties.Resources.settings_32px;
-            this.button1.Location = new System.Drawing.Point(546, 10);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(39, 42);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Image = Monobus.Properties.Resources.settings_32px;
+            button1.Location = new System.Drawing.Point(637, 12);
+            button1.Margin = new System.Windows.Forms.Padding(2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(46, 48);
+            button1.TabIndex = 12;
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // pbCover
             // 
-            this.pbCover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbCover.ErrorImage = global::Omnibus.Properties.Resources.omnibus_preview_image;
-            this.pbCover.Image = global::Omnibus.Properties.Resources.omnibus_preview_image;
-            this.pbCover.InitialImage = global::Omnibus.Properties.Resources.omnibus_preview_image;
-            this.pbCover.Location = new System.Drawing.Point(415, 113);
-            this.pbCover.Margin = new System.Windows.Forms.Padding(2);
-            this.pbCover.Name = "pbCover";
-            this.pbCover.Size = new System.Drawing.Size(214, 292);
-            this.pbCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbCover.TabIndex = 3;
-            this.pbCover.TabStop = false;
+            pbCover.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            pbCover.Location = new System.Drawing.Point(484, 130);
+            pbCover.Margin = new System.Windows.Forms.Padding(2);
+            pbCover.Name = "pbCover";
+            pbCover.Size = new System.Drawing.Size(250, 337);
+            pbCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            pbCover.TabIndex = 3;
+            pbCover.TabStop = false;
             // 
             // lvDownloads
             // 
-            this.lvDownloads.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvDownloads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Title,
-            this.Status,
-            this.Progress,
-            this.ID});
-            this.lvDownloads.HideSelection = false;
-            this.lvDownloads.Location = new System.Drawing.Point(9, 410);
-            this.lvDownloads.Margin = new System.Windows.Forms.Padding(2);
-            this.lvDownloads.Name = "lvDownloads";
-            this.lvDownloads.Scrollable = false;
-            this.lvDownloads.Size = new System.Drawing.Size(620, 160);
-            this.lvDownloads.TabIndex = 14;
-            this.lvDownloads.UseCompatibleStateImageBehavior = false;
-            this.lvDownloads.View = System.Windows.Forms.View.Details;
-            this.lvDownloads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvDownloads_MouseClick);
+            lvDownloads.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lvDownloads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { Title, Status, Progress, ID });
+            lvDownloads.Location = new System.Drawing.Point(10, 473);
+            lvDownloads.Margin = new System.Windows.Forms.Padding(2);
+            lvDownloads.Name = "lvDownloads";
+            lvDownloads.Scrollable = false;
+            lvDownloads.Size = new System.Drawing.Size(723, 184);
+            lvDownloads.TabIndex = 14;
+            lvDownloads.UseCompatibleStateImageBehavior = false;
+            lvDownloads.View = System.Windows.Forms.View.Details;
+            lvDownloads.MouseClick += lvDownloads_MouseClick;
             // 
             // Title
             // 
-            this.Title.Text = "Title";
-            this.Title.Width = 306;
+            Title.Text = "Title";
+            Title.Width = 306;
             // 
             // Status
             // 
-            this.Status.Text = "Status";
-            this.Status.Width = 131;
+            Status.Text = "Status";
+            Status.Width = 131;
             // 
             // Progress
             // 
-            this.Progress.Text = "Progress";
-            this.Progress.Width = 177;
+            Progress.Text = "Progress";
+            Progress.Width = 177;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Cancel,
-            this.toolStripSeparator1,
-            this.clearDownloads});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(164, 54);
-            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
+            contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { Cancel, toolStripSeparator1, clearDownloads });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new System.Drawing.Size(164, 54);
+            contextMenuStrip1.ItemClicked += contextMenuStrip1_ItemClicked;
             // 
             // Cancel
             // 
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(163, 22);
-            this.Cancel.Text = "Cancel";
+            Cancel.Name = "Cancel";
+            Cancel.Size = new System.Drawing.Size(163, 22);
+            Cancel.Text = "Cancel";
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
             // 
             // clearDownloads
             // 
-            this.clearDownloads.Name = "clearDownloads";
-            this.clearDownloads.Size = new System.Drawing.Size(163, 22);
-            this.clearDownloads.Text = "Clear Downloads";
+            clearDownloads.Name = "clearDownloads";
+            clearDownloads.Size = new System.Drawing.Size(163, 22);
+            clearDownloads.Text = "Clear Downloads";
             // 
             // btnLastPage
             // 
-            this.btnLastPage.Enabled = false;
-            this.btnLastPage.Location = new System.Drawing.Point(358, 85);
-            this.btnLastPage.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLastPage.Name = "btnLastPage";
-            this.btnLastPage.Size = new System.Drawing.Size(23, 23);
-            this.btnLastPage.TabIndex = 15;
-            this.btnLastPage.Text = "<";
-            this.btnLastPage.UseVisualStyleBackColor = true;
-            this.btnLastPage.Click += new System.EventHandler(this.btnLastPage_Click);
+            btnLastPage.Enabled = false;
+            btnLastPage.Location = new System.Drawing.Point(418, 98);
+            btnLastPage.Margin = new System.Windows.Forms.Padding(2);
+            btnLastPage.Name = "btnLastPage";
+            btnLastPage.Size = new System.Drawing.Size(27, 27);
+            btnLastPage.TabIndex = 15;
+            btnLastPage.Text = "<";
+            btnLastPage.UseVisualStyleBackColor = true;
+            btnLastPage.Click += btnLastPage_Click;
             // 
             // btnNextPage
             // 
-            this.btnNextPage.Enabled = false;
-            this.btnNextPage.Location = new System.Drawing.Point(386, 85);
-            this.btnNextPage.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(23, 23);
-            this.btnNextPage.TabIndex = 16;
-            this.btnNextPage.Text = ">";
-            this.btnNextPage.UseVisualStyleBackColor = true;
-            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
+            btnNextPage.Enabled = false;
+            btnNextPage.Location = new System.Drawing.Point(450, 98);
+            btnNextPage.Margin = new System.Windows.Forms.Padding(2);
+            btnNextPage.Name = "btnNextPage";
+            btnNextPage.Size = new System.Drawing.Size(27, 27);
+            btnNextPage.TabIndex = 16;
+            btnNextPage.Text = ">";
+            btnNextPage.UseVisualStyleBackColor = true;
+            btnNextPage.Click += btnNextPage_Click;
             // 
             // cmsComics
             // 
-            this.cmsComics.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsComics.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.search,
-            this.validate,
-            this.validateMF});
-            this.cmsComics.Name = "cmsComics";
-            this.cmsComics.Size = new System.Drawing.Size(184, 70);
-            this.cmsComics.Opening += new System.ComponentModel.CancelEventHandler(this.cmsComics_Opening);
-            this.cmsComics.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.cmsComics_ItemClicked);
+            cmsComics.ImageScalingSize = new System.Drawing.Size(20, 20);
+            cmsComics.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { search, validate, validateMF });
+            cmsComics.Name = "cmsComics";
+            cmsComics.Size = new System.Drawing.Size(184, 70);
+            cmsComics.Opening += cmsComics_Opening;
+            cmsComics.ItemClicked += cmsComics_ItemClicked;
             // 
             // search
             // 
-            this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(183, 22);
-            this.search.Text = "Find more like this";
+            search.Name = "search";
+            search.Size = new System.Drawing.Size(183, 22);
+            search.Text = "Find more like this";
             // 
             // validate
             // 
-            this.validate.Name = "validate";
-            this.validate.Size = new System.Drawing.Size(183, 22);
-            this.validate.Text = "Verify MEGA Link";
-            this.validate.Click += new System.EventHandler(this.validate_Click);
+            validate.Name = "validate";
+            validate.Size = new System.Drawing.Size(183, 22);
+            validate.Text = "Verify MEGA Link";
+            validate.Click += validate_Click;
             // 
             // validateMF
             // 
-            this.validateMF.Name = "validateMF";
-            this.validateMF.Size = new System.Drawing.Size(183, 22);
-            this.validateMF.Text = "Verify MediaFire Link";
-            this.validateMF.Click += new System.EventHandler(this.verifyMediafireLinkToolStripMenuItem_Click);
+            validateMF.Name = "validateMF";
+            validateMF.Size = new System.Drawing.Size(183, 22);
+            validateMF.Text = "Verify MediaFire Link";
+            validateMF.Click += verifyMediafireLinkToolStripMenuItem_Click;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 576);
-            this.Controls.Add(this.btnNextPage);
-            this.Controls.Add(this.btnLastPage);
-            this.Controls.Add(this.lvDownloads);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.tbDesc);
-            this.Controls.Add(this.btnDownload);
-            this.Controls.Add(this.btnOpenLink);
-            this.Controls.Add(this.pbCover);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.tbComicSearch);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lbComics);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbCover)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.cmsComics.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(743, 665);
+            Controls.Add(btnNextPage);
+            Controls.Add(btnLastPage);
+            Controls.Add(lvDownloads);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(btnClear);
+            Controls.Add(tbDesc);
+            Controls.Add(btnDownload);
+            Controls.Add(btnOpenLink);
+            Controls.Add(pbCover);
+            Controls.Add(btnSearch);
+            Controls.Add(tbComicSearch);
+            Controls.Add(label1);
+            Controls.Add(lbComics);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(2);
+            Name = "Form1";
+            Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)pbCover).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
+            cmsComics.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

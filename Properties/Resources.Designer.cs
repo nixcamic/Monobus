@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Omnibus.Properties {
+namespace Monobus.Properties {
     using System;
     
     

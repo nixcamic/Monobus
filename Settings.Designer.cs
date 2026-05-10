@@ -1,4 +1,4 @@
-﻿namespace Omnibus
+﻿namespace Monobus
 {
     partial class Settings
     {
