@@ -32,10 +32,10 @@ namespace Monobus
         private int idCount = 0;
         public int LVCount = 0;
         private int page = 1;
-
-        static readonly HttpClient httpClient = new HttpClient();
-
         string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0";
+
+        HttpClient httpClient = new HttpClient();
+
 
         private object comicIndex;
 
@@ -57,12 +57,15 @@ namespace Monobus
         public Form1()
         {
             InitializeComponent();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+            httpClient.DefaultRequestHeaders.Add("Cookie", "__cfduid=" + Properties.Settings.Default.cfduid + ";" +
+                                "cf_clearance=" + Properties.Settings.Default.cf_clearance); //TODO Cookies dont seem to actually be set anywhere....
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "Monobus - v" + version;
-            
+
             //Create Tooltips for settings and download location button
             ToolTip toolTip1 = new ToolTip();
 
@@ -168,7 +171,6 @@ namespace Monobus
                 idCount = 0;
                 downloadList.Clear();
             }
-
             if (lbComics.Items.Count > 0)
             {
                 if (lbComics.SelectedItems.Count == 0)
