@@ -22,8 +22,8 @@ namespace Monobus
     public partial class Form1 : Form
     {
 
-        private String version = "1.5.4";
-        private String url = "https://getcomics.org/?s=";
+        private String version = "0.0.1";
+        private String url = "https://getcomics.org/?s="; //TODO: Make user configureable, change references and cookies to use this
         private int cancelled = 0;
         private bool isDownloading = false;
         private int complete;
@@ -33,11 +33,14 @@ namespace Monobus
         public int LVCount = 0;
         private int page = 1;
 
+        static readonly HttpClient httpClient = new HttpClient();
+
         string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0";
 
         private object comicIndex;
 
         private IEnumerable<HtmlNode> nodes, descNodes, ulNodes, newpageNodes, oldpageNodes;
+
 
         private System.Net.WebClient client = new System.Net.WebClient();
 
@@ -937,7 +940,7 @@ namespace Monobus
             return title;
         }
 
-        private void searchComics(string function)
+        private async Task searchComics(string function)
         {
             string search = "";
 
@@ -985,45 +988,18 @@ namespace Monobus
 
             reqCookies.Add(cookieCfClearance);
 
-
-            HttpWebRequest request = getRequest(searchURL);
-
-            HttpWebResponse response = null;
-
             string html = "null";
 
             try
             {
-                response = (HttpWebResponse)request.GetResponse();
-                var stream = response.GetResponseStream();
-                var reader = new StreamReader(stream);
-                html = reader.ReadToEnd();
-                response.Close();
-                reader.Close();
+                html = await httpClient.GetStringAsync(searchURL);
             }
 
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
                 MessageBox.Show(ex.Message, "Error Connecting to Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //catch (WebException ex)
-            //{
-            //    using (var sr = new StreamReader(ex.Response.GetResponseStream()))
-            //        html = sr.ReadToEnd();
-            //}
-
-            //tbhtml.Text = html;
-            
-            //try
-            //{
-            //    response = (HttpWebResponse)request.GetResponse();
-            //}
-            //catch (Exception ex)
-            //{
-            //    LogWriter("Searching for " + searchURL + " failed.");
-            //    LogWriter(ex.ToString());
-            //}
             
             if (html == null)
             {
@@ -1096,25 +1072,6 @@ namespace Monobus
                 File.AppendAllText(logPath + "\\log.txt", "(" + datetime + ") - " + line + Environment.NewLine);
             }
             
-        }
-
-        public static string GetCookie()
-        {
-            WebRequest request = WebRequest.Create("https://hornystress.me");
-            request.Proxy = WebProxy.GetDefaultProxy();
-            request.Timeout *= 100;
-            string cookie;
-            WebResponse response;
-            try
-            {
-                response = request.GetResponse();
-                cookie = response.Headers.Get("Set-Cookie");
-            }
-            catch (WebException we)
-            {
-                cookie = we.Response.Headers.Get("Set-Cookie");
-            }
-            return cookie;
         }
 
         public HttpWebRequest getRequest(string url)
