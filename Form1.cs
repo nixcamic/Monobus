@@ -145,7 +145,8 @@ namespace Monobus
                 try
                 {
                     //Open the link on getcomics.org in your default browser
-                    System.Diagnostics.Process.Start(a[1]);
+                    //System.Diagnostics.Process.Start(a[1]);
+                    Process.Start(new ProcessStartInfo { FileName = a[1], UseShellExecute = true }); //TODO: Does this work on other platforms or just windows?
                 }
                 catch (Win32Exception)
                 {
@@ -615,7 +616,7 @@ namespace Monobus
             }
         }
 
-        private void cmsComics_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private async void cmsComics_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Name == "search")
             {
@@ -774,32 +775,22 @@ namespace Monobus
                     if (comicDLLink != "")
                     {
 
-                        HttpWebRequest requestMF = getRequest(comicDLLink);
+                        string dataMF = null;
 
-                        HttpWebResponse responseMF = (HttpWebResponse)requestMF.GetResponse();
-
-                        if (responseMF.StatusCode == HttpStatusCode.OK)
+                        try
                         {
-                            Stream receiveStreamMF = responseMF.GetResponseStream();
-                            StreamReader readStreamMF = null;
+                            dataMF = await httpClient.GetStringAsync(comicDLLink);
+                        }
 
-                            if (responseMF.CharacterSet == null)
-                            {
-                                readStreamMF = new StreamReader(receiveStreamMF);
-                            }
-                            else
-                            {
-                                readStreamMF = new StreamReader(receiveStreamMF, Encoding.GetEncoding(responseMF.CharacterSet));
-                            }
+                        catch (HttpRequestException ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error Connecting to Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
 
-                            string dataMF = readStreamMF.ReadToEnd();
 
-                            responseMF.Close();
-                            receiveStream.Close();
-                            readStreamMF.Close();
-
-                            string comicDLLinkMF = "";
-
+                        if (!String.IsNullOrEmpty(dataMF))
+                        {
+ 
                             HtmlAgilityPack.HtmlDocument docMF = new HtmlAgilityPack.HtmlDocument();
                             docMF.LoadHtml(dataMF);
 
