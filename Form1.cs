@@ -182,30 +182,22 @@ namespace Monobus
                     HtmlNode n = nodes.ElementAt(lbComics.SelectedIndex);
                     string node = n.InnerHtml;
                     string[] a = node.Split('"');
+                    
+                    //NEW
+                    string data = null;
 
-                    HttpWebRequest request = getRequest(a[1]);
-
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    try
                     {
-                        Stream receiveStream = response.GetResponseStream();
-                        StreamReader readStream = null;
+                        data = await httpClient.GetStringAsync(a[1]);
+                    }
 
-                        if (response.CharacterSet == null)
-                        {
-                            readStream = new StreamReader(receiveStream);
-                        }
-                        else
-                        {
-                            readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                        }
+                    catch (HttpRequestException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error Connecting to Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-                        string data = readStream.ReadToEnd();
-
-                        response.Close();
-                        readStream.Close();
-
+                    if (!String.IsNullOrEmpty(data))
+                    {
                         string comicDLLink = "";
 
                         HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
@@ -234,8 +226,6 @@ namespace Monobus
                         {
                             string lastURL = "";
                             List<string> EVs = new List<string>();
-
-                            HttpWebRequest requestMF = getRequest(comicDLLink);
 
                             try
                             {
@@ -271,15 +261,7 @@ namespace Monobus
                             MessageBox.Show("No download link available. Go to comic's page and try to download manually.");
                         }
 
-                        
-                    }
-                    else
-                    {
 
-                        var statusCode = response.StatusCode;
-                        var statusDesc = response.StatusDescription;
-
-                        MessageBox.Show("Error: " + statusCode + ": " + statusDesc);
                     }
                 }
             }
